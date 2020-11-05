@@ -19,3 +19,4 @@ setTimeout(function() {
     window.location = "signup-freelancer.php";
 }, 2000);
 style="display: <?php echo $editautoelectrician['vehicle_category'] == 'Yes' ? 'block' : 'none';?>;">
+	 return exit(json_encode(["response" => ["code" => '1', "success" => 'sucess', "msg" =>' login sucessfully']]));
