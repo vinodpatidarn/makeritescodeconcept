@@ -56,4 +56,5 @@ $(document).ready(function(){
      });
  
    });
+https://www.jqueryscript.net/other/Print-Specified-Area-Of-A-Page-PrintArea.html
  
