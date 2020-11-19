@@ -96,6 +96,96 @@ filter_item();
      $('.min-max-slider').click(function(){
          filter_item();   
      });
+// and  then fetch data by tables
+<?php
+include 'function.php';
+$min = $_POST['minimum_price'];
+
+
+$max = $_POST['maximum_price'];
+if (isset($_POST['maximum_price']) and !empty($_POST['maximum_price']) ) {
+   $size1 ="";
+   if(isset($_POST['size'])){
+   $size1 = implode(',',array_map('intval',$_POST['size']));   
+}
+   
+   
+   $strfilter ="";
+   if(!empty($size1))
+   {
+        $strfilter = " AND product_attributes.product_attributes IN(".$size1.") ";
+   }
+   else{
+    $strfilter ="";
+   }
+
+    $p_fname = base64_decode($_POST['p_name']);
+    $result = mysqli_query($conn, "SELECT product.product_image as p_img,product.product_name as p_name,product.id as p_id,product_attributes.product_price,product_attributes.	product_attributes as p_a_attribute,product_attributes.product_price as p_a_price FROM product INNER JOIN product_attributes ON product.id = product_attributes.product_id WHERE (product_attributes.product_price BETWEEN $min AND $max )
+     $strfilter AND sub_cat_id = '$p_fname'");
+
+    if (mysqli_num_rows($result) > '0') {
+        while ($p_rows = mysqli_fetch_array($result)) {
+?>
+
+            <div class="col-6 col-md-4 col-lg-4 col-xl-3 product_filter">
+                <div class="product product-7 text-center" style="box-shadow: 0 0px 5px 0px #777;">
+                    <figure class="product-media">
+                        <span class="product-label label-new">New</span>
+                        <a href="product-details.php">
+                            <?php
+                            $images  = @unserialize($p_rows['p_img']);
+                            $f_image = isset($images[0]) ? $images[0] : '';
+                            ?>
+                            <img src="assets/uploads/<?php if (!empty($f_image)) {
+                                                            echo $f_image;
+                                                            //echo implode(',',unserialize($p_rows['p_img']));
+                                                        } else {
+                                                            echo "default_img/download.png";
+                                                        }; ?>" alt="Product image" class="product-image">
+                        </a>
+
+                        <div class="product-action-vertical">
+                            <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                            <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                            <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                        </div><!-- End .product-action-vertical -->
+
+                        <div class="product-action">
+
+
+                            <a href="#" id="a_value" class="btn-product btn-cart" ><span>add to cart</span></a>
+                                                        
+                                                    </div><!-- End .product-action -->
+                                                </figure><!-- End .product-media -->
+
+                                                <div class=" product-body">
+                                <div class="product-cat">
+                                    <a href="#"></a>
+                                </div><!-- End .product-cat -->
+                                <h3 class="product-title"><a href="product.php"><?php echo $p_rows['p_name']; ?></a></h3><!-- End .product-title -->
+                                <div class="product-price">
+                                    <?php echo $p_rows['p_a_attribute']; ?> Rs <?php echo $p_rows['p_a_price']; ?>
+                                </div><!-- End .product-price -->
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
+                                    </div><!-- End .ratings -->
+                                    <span class="ratings-text">( 2 Reviews )</span>
+                                </div><!-- End .rating-container -->
+
+                                <!-- End .product-nav -->
+                        </div><!-- End .product-body -->
+                </div><!-- End .product -->
+            </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+
+<?php
+        }
+    }
+
+
+}
+?>
+    //end fetch data by tables
 
 //full filter used by html pages for price and checkbox
 
