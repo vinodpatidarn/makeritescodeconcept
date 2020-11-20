@@ -371,10 +371,29 @@ $(document).ready(function(){
 
 });
 </script>
-
+ 
 </body>
 
 </html>
+
+ // anchore tag ajax use
+ $(document).ready(function() {
+        $('.anchore_value').click(function(event) {
+            event.preventDefault();
+            var get = $(this).attr('value');
+            alert('Add to Cart');
+            $.ajax({
+                url: 'addcart.php?id='+get,
+                success: function(data) {
+                    $(".fetch_data").html(data);
+                   },
+                error: function(data) {
+                    console.log("error");
+                    console.log(data);
+                }
+            });
+        });
+    });
 
  
  
