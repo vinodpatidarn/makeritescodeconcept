@@ -399,6 +399,30 @@ $(document).ready(function(){
         });
     });
 
+//search table direct with the help of javascript
+
+<script type="text/javascript">
+  // JavaScript code
+function search_product() {
+let input = document.getElementById('searchbar').value
+input=input.toLowerCase();
+let x = document.getElementsByClassName('product_n');
+for (i = 0; i < x.length; i++) {
+    if (!x[i].innerHTML.toLowerCase().includes(input)) {
+        x[i].style.display="none";
+    }
+    else {
+        x[i].style.display="block";
+    }
+}
+}
+</script>
+5:42
+<input id="searchbar" onkeyup="search_product()" type="text"
+    name="search" placeholder="Search product..">
+     
+     //serch complete//
+
  
  
  
